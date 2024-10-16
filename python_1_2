@@ -1,0 +1,21 @@
+#Написать функцию, которая принимает два аргумента: лямбда функция для фильтрации массива, массив строк. Сделать вызов данной функции для следующих функций фильтрации:
+#• Исключить строки с пробелами
+#• Исключить строки, начинающиеся с буквы “a”
+#• Исключить строки, длина которых меньше 5
+
+def filter_strings(filter_func, string_list):
+    return [s for s in string_list if filter_func(s)]
+
+# Примеры использования:
+
+# Исключить строки с пробелами
+no_spaces = filter_strings(lambda s: ' ' not in s, ["hello", "world", "foo bar", "baz"])
+print(no_spaces)  # ['hello', 'world', 'baz']
+
+# Исключить строки, начинающиеся с буквы "a"
+no_a_start = filter_strings(lambda s: not s.startswith('a'), ["apple", "banana", "avocado", "cherry"])
+print(no_a_start)  # ['banana', 'cherry']
+
+# Исключить строки, длина которых меньше 5
+length_at_least_5 = filter_strings(lambda s: len(s) >= 5, ["hi", "hello", "world", "yes", "no"])
+print(length_at_least_5)  # ['hello', 'world']

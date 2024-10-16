@@ -1,0 +1,61 @@
+#Создать классы студент, аспирант. Студент содержит свойства: номер группы, средний балл. Аспирант отличается от студента наличием научной работы (название работы в виде строки). Реализовать в классах следующие методы:
+#• вывести информацию о человеке (фио, возраст)
+#• вывести размер стипендии. Если средняя оценка равна 5, то стипендия 8000р для аспиранта и 6000р для студента, если меньше 5, то стипендия для аспиранта 6000р, для студента 4000р, в других случаях стипендия 0р
+#• Сравнение размера стипендии с другим студентом/аспирантом (больше или меньше)
+
+class Person:
+    def __init__(self, full_name, age):
+        self.full_name = full_name
+        self.age = age
+    
+    def display_info(self):
+        return f"ФИО: {self.full_name}, Возраст: {self.age}"
+
+class Student(Person):
+    def __init__(self, full_name, age, group_number, average_grade):
+        super().__init__(full_name, age)
+        self.group_number = group_number
+        self.average_grade = average_grade
+    
+    def scholarship(self):
+        if self.average_grade == 5:
+            return 6000
+        elif self.average_grade < 5:
+            return 4000
+        else:
+            return 0
+    
+    def compare_scholarship(self, other):
+        return self.scholarship() - other.scholarship()
+
+class Postgraduate(Student):
+    def __init__(self, full_name, age, group_number, average_grade, research_work):
+        super().__init__(full_name, age, group_number, average_grade)
+        self.research_work = research_work
+    
+    def scholarship(self):
+        if self.average_grade == 5:
+            return 8000
+        elif self.average_grade < 5:
+            return 6000
+        else:
+            return 0
+
+# Примеры использования:
+student = Student("Иван Иванов", 20, "A1", 4.5)
+postgraduate = Postgraduate("Петр Петров", 25, "B1", 5, "Исследование в области AI")
+
+print(student.display_info())
+print("Стипендия студента:", student.scholarship())
+
+print(postgraduate.display_info())
+print("Стипендия аспиранта:", postgraduate.scholarship())
+
+# Сравнение стипендий
+comparison = student.compare_scholarship(postgraduate)
+if comparison > 0:
+    print("Студент получает больше стипендии.")
+elif comparison < 0:
+    print("Аспирант получает больше стипендии.")
+else:
+    print("Стипендии равны.")

@@ -1,0 +1,42 @@
+#Реализовать декоратор, который выводит в консоль время выполнения декорируемой функции. Протестировать работу декоратора на двух функциях:
+#• Функция вычисляет сумму двух чисел a и b, выводит результат в консоль
+#• Функция читает из файла input.txt значение двух чисел a и b, записывает результат вычисления в файл output.txt (файлы приложить к репозиторию)
+
+import time
+
+def timing_decorator(func):
+    def wrapper(*args, **kwargs):
+        start_time = time.time()
+        result = func(*args, **kwargs)
+        end_time = time.time()
+        execution_time = end_time - start_time
+        print(f"Время выполнения функции '{func.__name__}': {execution_time:.6f} секунд")
+        return result
+    return wrapper
+
+@timing_decorator
+def sum_two_numbers(a, b):
+    result = a + b
+    print(f"Сумма {a} и {b} равна {result}")
+    return result
+
+@timing_decorator
+def read_and_sum():
+    try:
+        with open('input.txt', 'r') as infile:
+            a, b = map(int, infile.read().split())
+        result = a + b
+        with open('output.txt', 'w') as outfile:
+            outfile.write(f"Сумма {a} и {b} равна {result}")
+    except FileNotFoundError:
+        print("Файл input.txt не найден.")
+    except ValueError:
+        print("Ошибка в формате данных в файле.")
+    except Exception as e:
+        print(f"Произошла ошибка: {e}")
+
+# Тестирование функций
+sum_two_numbers(3, 4)
+
+# Убедитесь, что файл input.txt существует и содержит два числа
+read_and_sum()
